@@ -10,11 +10,14 @@ using namespace std;
 //////////////////////////
 void combinationOfChars(string);
 void permutations(string);
+bool kmp(string, string);
+void solveKMP();
 
 int main()
 {
     combinationOfChars("abc");
     permutations("aabc");
+    solveKMP();
 }
 
 /////////////////////////////
@@ -119,4 +122,77 @@ void permutations(string s)
     printf("Printing all permutations of %s", s.c_str());
 
     permutationsHelper(str, output, count, 0);
+}
+
+void solveKMP()
+{
+    string s = "abcbcglx";
+    string p = "bcgl";
+    bool res = kmp(s, p);
+    printf("%s is in %s? %s\n", p.c_str(), s.c_str(), res ? "true" : "false");
+}
+
+vector<int> kmpUtil(string p)
+{
+    vector<int> pattern;
+
+    // zero at the vector
+    for (int i = 0; i < p.length(); i++)
+        pattern.push_back(0);
+    int i = 1;
+    int j = 0;
+    while (i < p.length())
+    {
+        //printf("i: %d, j: %d, vector size: %lu\n", i, j, pattern.size());
+        if (p[i] != p[j])
+        {
+            if (j != 0)
+            {
+                j = pattern[j - 1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+        else
+        {
+            // indicates that there is a prefix that is a suffix
+            // avoid redundant comparisons
+            pattern[i] = j + 1;
+            i++;
+            j++;
+        }
+    }
+    return pattern;
+}
+
+bool kmp(string s, string p)
+{
+    vector<int> pattern = kmpUtil(p);
+    int i = 0;
+    int j = 0;
+    cout << "here" << endl;
+    while (i < s.length())
+    {
+        if (s[i] == p[j])
+        {
+            if (j == p.length() - 1)
+                return true;
+            // move both pointers forward
+            i++;
+            j++;
+        }
+        else
+        {
+            // DO NOT INCREMENT I, WE STILL NEED TO COMPARE
+            if (j != 0)
+                j = pattern[j - 1];
+            // INCREMENT I BECAUSE WE ARE AT THE END OF THE PREFIX
+            else
+                i++;
+        }
+    }
+
+    return false;
 }
