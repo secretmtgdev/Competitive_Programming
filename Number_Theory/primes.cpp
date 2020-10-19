@@ -17,13 +17,15 @@ bool isPrimeSqrt(ll);
 bool isPrimeSieve(ll);
 void generateSieveArray(ll *);
 void kthPrime();
+void printPrimeFactorization(ll);
 
 int main()
 {
-    // timeFunction("Naive", isPrimeNaive);
-    // timeFunction("Sqrt", isPrimeSqrt);
-    // timeFunction("Sieve", isPrimeSieve);
+    timeFunction("Naive", isPrimeNaive);
+    timeFunction("Sqrt", isPrimeSqrt);
+    timeFunction("Sieve", isPrimeSieve);
     kthPrime();
+    printPrimeFactorization(LLONG_MAX);
 }
 
 //////////////////////////////
@@ -133,15 +135,45 @@ vector<int> kthPrimeHelper()
 
 void kthPrime()
 {
+    cout << "Input number of queries for the kth prime: ";
     int q, n;
     cin >> q;
     vector<int> sieve = kthPrimeHelper();
     while (q--)
     {
+        cout << "Enter kth prime query: ";
         cin >> n;
         cout << "queries left: " << q << endl;
         cout << "query: " << n << endl;
         cout << "sieve size: " << sieve.size() << endl;
         cout << sieve[n - 1] << endl;
     }
+}
+
+void printPrimeFactorization(ll n)
+{
+    for (ll i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            int pow = 0;
+            while (n % i == 0)
+            {
+                pow++;
+                n /= i;
+            }
+            printf("(%lld^%d) ", i, pow);
+        }
+    }
+
+    // pseudo base case
+    // in the event that n is not divisible by anything
+    // it in itself is the prime
+    if (n > 1)
+    {
+        printf("(%lld^%d)", n, 1);
+    }
+
+    cout << "\n"
+         << flush;
 }
