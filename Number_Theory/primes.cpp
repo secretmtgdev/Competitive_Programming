@@ -18,19 +18,44 @@ bool isPrimeSieve(ll);
 void generateSieveArray(ll *);
 void kthPrime();
 void printPrimeFactorization(ll);
+int binaryExponentiation(int, int);
 
 int main()
 {
-    timeFunction("Naive", isPrimeNaive);
-    timeFunction("Sqrt", isPrimeSqrt);
-    timeFunction("Sieve", isPrimeSieve);
-    kthPrime();
-    printPrimeFactorization(LLONG_MAX);
+    // timeFunction("Naive", isPrimeNaive);
+    // timeFunction("Sqrt", isPrimeSqrt);
+    // timeFunction("Sieve", isPrimeSieve);
+    // kthPrime();
+    // printPrimeFactorization(LLONG_MAX);
+    int base = 100;
+    int power = 10;
+    printf("%d^%d: %d\n", base, power, binaryExponentiation(base, power));
 }
 
 //////////////////////////////
 // FUNCTION IMPLEMENTATIONS //
 //////////////////////////////
+// RT: O(log(n))
+int binaryExponentiation(int base, int power)
+{
+    // square base and halve power until power is 0
+    int res = 1;
+    while (power != 0)
+    {
+        if (power % 2 == 1)
+        {
+            res *= base;
+            power -= 1;
+        }
+        else
+        {
+            base *= base;
+            power /= 2;
+        }
+    }
+    return res;
+}
+
 bool isPrimeNaive(ll n)
 {
     if (n < 2)
