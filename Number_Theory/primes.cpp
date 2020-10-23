@@ -8,6 +8,8 @@
 using namespace std;
 typedef long long ll;
 
+vector<ll> sieve_primes;
+
 ///////////////////////////
 // FUNCTION DECLARATIONS //
 ///////////////////////////
@@ -15,26 +17,84 @@ void timeFunction(string, function<bool(ll)>);
 bool isPrimeNaive(ll);
 bool isPrimeSqrt(ll);
 bool isPrimeSieve(ll);
+bool isPrimePrime(ll);
 void generateSieveArray(ll *);
 void kthPrime();
 void printPrimeFactorization(ll);
 int binaryExponentiation(int, int);
+void printPrimesInRange(int, int);
+
+///////////////////////
+// TESTING FUNCTIONS //
+///////////////////////
+void testBasicPrimeFunctions();
+void testPrimesInRange();
+void testPrimePrime();
+
+//////////////////////
+// HELPER FUNCTIONS //
+//////////////////////
+void clean();
 
 int main()
 {
-    // timeFunction("Naive", isPrimeNaive);
-    // timeFunction("Sqrt", isPrimeSqrt);
-    // timeFunction("Sieve", isPrimeSieve);
-    // kthPrime();
-    // printPrimeFactorization(LLONG_MAX);
-    int base = 100;
-    int power = 10;
-    printf("%d^%d: %d\n", base, power, binaryExponentiation(base, power));
+    //testBasicPrimeFunctions();
+    //testPrimesInRange();
+    testPrimePrime();
 }
 
 //////////////////////////////
 // FUNCTION IMPLEMENTATIONS //
 //////////////////////////////
+// Number is prime prime, if the number of primes before it is prime
+bool isPrimePrime(ll n)
+{
+    int count = 0;
+    // assume that all of the contents to be assumed prime
+    for (ll i = 0; i < n; i++)
+    {
+        sieve_primes.push_back(1);
+    }
+
+    // the number 1 can't be prime, so cross this out
+    sieve_primes[0] = 0;
+    sieve_primes[1] = 0;
+
+    // generate sieves array
+    for (int i = 2; i < n; i++)
+    {
+        // check to see if the number is prime
+        if (sieve_primes[i])
+        {
+            count++;
+            // start: first composite of the current prime
+            for (int j = i * i; j <= n; j += i)
+            {
+                // mark the composite as not prime
+                sieve_primes[j] = 0;
+            }
+        }
+    }
+
+    return isPrimeSqrt(count);
+}
+
+void printPrimesInRange(int L, int R)
+{
+    int primeCount = 0;
+    printf("[ ");
+    for (int i = L; i <= R; i++)
+    {
+        if (isPrimeSqrt(i))
+        {
+            printf("%d ", i);
+            primeCount++;
+        }
+    }
+    printf("]\n");
+    printf("The total number of primes in the range [%d:%d]: %d\n", L, R, primeCount);
+}
+
 // RT: O(log(n))
 int binaryExponentiation(int base, int power)
 {
@@ -113,11 +173,11 @@ void generateSieveArray(ll *sieve)
 
     // first value in the sieves, aka '1', can't be prime
     sieve[0] = 0;
-    for (ll i = 1; i * i < n; i++)
+    sieve[1] = 0;
+    for (ll i = 2; i * i < n; i++)
     {
         if (sieve[i])
         {
-            ll startFactor = 2;
             for (int j = i * i; i <= n; j += i)
             {
                 sieve[j] = 0;
@@ -158,6 +218,8 @@ vector<int> kthPrimeHelper()
     return primes;
 }
 
+// This function expects an input indicating the number of following inputs
+// be careful when using this function
 void kthPrime()
 {
     cout << "Input number of queries for the kth prime: ";
@@ -201,4 +263,38 @@ void printPrimeFactorization(ll n)
 
     cout << "\n"
          << flush;
+}
+
+void clean()
+{
+    sieve_primes.clear();
+}
+
+//////////////////////////////////////
+// TESTING FUNCTION IMPLEMENTATIONS //
+//////////////////////////////////////
+void testBasicPrimeFunctions()
+{
+    timeFunction("Naive", isPrimeNaive);
+    timeFunction("Sqrt", isPrimeSqrt);
+    timeFunction("Sieve", isPrimeSieve);
+    kthPrime();
+    printPrimeFactorization(LLONG_MAX);
+}
+void testPrimesInRange()
+{
+    int base = 100;
+    int power = 10;
+    printf("%d^%d: %d\n", base, power, binaryExponentiation(base, power));
+    printPrimesInRange(1, 100000000);
+}
+void testPrimePrime()
+{
+    vector<ll> sieves = {2, 3, 5, 7, 11, 13, 17, 19};
+    for (int i = 0; i < sieves.size(); i++)
+    {
+        int num = sieves[i];
+        printf("%d is a prime prime? %s\n", num, isPrimePrime(num) ? "true" : "false");
+        clean();
+    }
 }
