@@ -1,6 +1,15 @@
+# specific files
 .vscode
-node_modules/
 *.out
 .DS_Store
 tsconfig.json
 package.json
+
+# standard npx ciles
+logo.svg
+reportWebVitals.js
+setupTests.js
+
+# folders 
+node_modules/
+public/
