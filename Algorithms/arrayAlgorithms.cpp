@@ -28,11 +28,11 @@ bool sortSkylines(SkylinePoint *, SkylinePoint *);
 
 int main()
 {
-    // print queens to 16x16 board
-    // for (int i = 1; i <= 16; i++)
-    // {
-    //     nQueens(i);
-    // }
+    //print queens to 16x16 board
+    for (int i = 1; i <= 16; i++)
+    {
+        nQueens(i);
+    }
     // vector<int> sequence = {1, 2, 3, -2, -3, 4, 5, -3, 2};
     // cout << "Largest sum in the given sequence: " << kadane(sequence) << endl;
     vector<tuple<int, int, int>> buildings = {
@@ -109,6 +109,13 @@ vector<Point *> getSkylines(vector<tuple<int, int, int>> skylines)
             result.push_back(new Point(skyline->getX(), currMaxHeight));
         }
     }
+
+    for (auto skylinePoint : skylinePoints)
+    {
+        delete skylinePoint;
+    }
+    skylinePoints.clear();
+
     return result;
 };
 

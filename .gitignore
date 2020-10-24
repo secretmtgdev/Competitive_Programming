@@ -1,2 +1,6 @@
-./vscode
-./vscode/*
+.vscode
+node_modules/
+*.out
+.DS_Store
+tsconfig.json
+package.json
