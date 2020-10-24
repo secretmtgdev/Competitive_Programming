@@ -10,7 +10,8 @@
 
 using namespace std;
 
-set<string> DICTIONARY = {"like", "lamp", "limp", "lime", "damp"};
+set<string> DICTIONARY = {"hot", "dot", "dog", "lot", "log", "cog"};
+//{"like", "lamp", "limp", "lime", "damp"};
 
 //////////////////////////
 // FUNCTION DECLARATION //
@@ -397,5 +398,6 @@ void wordTransform(string src, string dst)
 
 void testWordTransform()
 {
-    wordTransform("damp", "like");
+    //wordTransform("damp", "like");
+    wordTransform("hit", "cog");
 }

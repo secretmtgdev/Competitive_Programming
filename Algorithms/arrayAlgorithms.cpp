@@ -14,6 +14,7 @@ using namespace std;
 void nQueens(int);
 int kadane(vector<int>);
 vector<Point *> getSkylines(vector<tuple<int, int, int>>);
+int magicIndex(vector<int>);
 
 /////////////////////////////////
 // HELPER FUNCTION DECLARATION //
@@ -54,6 +55,32 @@ int main()
 /////////////////////////////
 // FUNCTION IMPLEMENTATION //
 /////////////////////////////
+int magicIndex(vector<int> A)
+{
+    int lo = 0;
+    int hi = A.size() - 1;
+    while (lo <= hi)
+    {
+        int mid = lo + (hi - lo) / 2;
+        if (mid == A[mid])
+        {
+            return mid;
+        }
+        else if (mid < A[mid])
+        {
+            // go left, values to the right are too high
+            hi = mid - 1;
+        }
+        else
+        {
+            lo = mid + 1;
+        }
+    }
+
+    // failed to find a magic number
+    return -1;
+}
+
 vector<Point *> getSkylines(vector<tuple<int, int, int>> skylines)
 {
     vector<SkylinePoint *> skylinePoints = convertToSkylinePoints(skylines);

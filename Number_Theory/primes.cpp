@@ -21,6 +21,7 @@ bool isPrimePrime(ll);
 void generateSieveArray(ll *);
 void kthPrime();
 void printPrimeFactorization(ll);
+void primeFactorizationSieve(ll);
 int binaryExponentiation(int, int);
 void printPrimesInRange(int, int);
 
@@ -38,9 +39,9 @@ void clean();
 
 int main()
 {
-    //testBasicPrimeFunctions();
+    testBasicPrimeFunctions();
     //testPrimesInRange();
-    testPrimePrime();
+    //testPrimePrime();
 }
 
 //////////////////////////////
@@ -152,6 +153,30 @@ bool isPrimeSieve(ll n)
 //////////////////////
 // HELPER FUNCTIONS //
 //////////////////////
+void primeFactorizationSieve(ll n)
+{
+    vector<int> sieve(n + 1, -1);
+    for (int i = 2; i <= n; i++)
+    {
+        if (sieve[i] == -1)
+        {
+            for (int j = i * i; j <= n; j += i)
+            {
+                if (sieve[j] == -1)
+                {
+                    sieve[j] = i;
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < sieve.size(); i++)
+    {
+        cout << (sieve[i] != -1 ? sieve[i] : i) << " ";
+    }
+    cout << endl;
+}
+
 void timeFunction(string functionName, function<bool(ll)> callback)
 {
     auto start = chrono::high_resolution_clock::now();
@@ -277,9 +302,18 @@ void testBasicPrimeFunctions()
 {
     timeFunction("Naive", isPrimeNaive);
     timeFunction("Sqrt", isPrimeSqrt);
+
+    /** TODO: Fix this function as there is a SegFault 
+     *        that occurs after this is run 
+     */
     timeFunction("Sieve", isPrimeSieve);
     kthPrime();
     printPrimeFactorization(LLONG_MAX);
+    for (int i = 2; i < 100; i++)
+    {
+        cout << "Printing prime fact sieve" << endl;
+        primeFactorizationSieve(i);
+    }
 }
 void testPrimesInRange()
 {
