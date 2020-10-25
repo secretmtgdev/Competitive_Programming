@@ -1,0 +1,10 @@
+.skyline-container {
+  margin: auto;
+  position: relative;
+}
+
+.skyline-block {
+  display: inline;
+  position: absolute;
+  border: solid 1px black;
+}

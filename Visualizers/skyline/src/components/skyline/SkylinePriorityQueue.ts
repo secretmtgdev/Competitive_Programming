@@ -1,5 +1,10 @@
 import { SkylineQueuePoint } from "./Types";
 
+/** TODO:
+ * Investigate the cause of the insertion failure. This class cannot be used
+ * until the cause of failure is resolved.
+ */
+
 class SkylinePriorityQueue {
   heap: Array<number>;
   currentSize: number;
@@ -11,7 +16,10 @@ class SkylinePriorityQueue {
   // up to the user to do so when the time is right.
   constructor(initSize: number) {
     this.currentSize = 0;
-    this.heap = new Array<number>(initSize);
+
+    // the skyline algorithm will input a default value of
+    // 0 to start the solution
+    this.heap = new Array<number>(initSize + 1);
 
     // set the default values to -1.
     this.heap.fill(-1);
@@ -29,7 +37,7 @@ class SkylinePriorityQueue {
     // percolate upward
     for (
       this.heap[this.currentSize] = x;
-      x > this.heap[Math.floor(bubble / 2)];
+      bubble > 0 && x > this.heap[Math.floor(bubble / 2)];
 
     ) {
       let newBubble = Math.floor(bubble / 2);
@@ -49,20 +57,48 @@ class SkylinePriorityQueue {
     }
 
     let bubble: number = 1;
-    this.heap[bubble] = this.heap[this.currentSize--];
-    // pseudo bubble is now at h[0]
-    this.percolateDown(bubble);
+    this.startPercolateDown(bubble);
+  }
+
+  deleteValue(x: number): void {
+    if (this.isEmpty()) {
+      throw new Error("Can't delete from an empty heap");
+    }
+
+    let index = this.find(x);
+    console.log(`Index of value to delete: ${index}`);
+    if (index >= 0) {
+      this.startPercolateDown(index + 1);
+    }
+  }
+
+  find(x: number): number {
+    for (let index = 0; index < this.currentSize; index++) {
+      if (this.heap[index] === x) return index;
+    }
+    return -1;
   }
 
   isEmpty(): boolean {
     return this.currentSize === 0;
   }
 
-  makeEmpty(): void {}
+  toString(): string {
+    let str: string = `[${this.heap[0]}`;
+    for (let i = 1; i < this.currentSize; i++) {
+      str += `, ${this.heap[i]}`;
+    }
+    return str + "]";
+  }
 
   //////////////////////
   // Helper functions //
   //////////////////////
+  private startPercolateDown(bubble: number): void {
+    this.heap[bubble] = this.heap[this.currentSize--];
+    this.percolateDown(bubble);
+  }
+
   private percolateDown(bubble: number): void {
     let child: number;
     let tmp = this.heap[bubble];
@@ -109,3 +145,5 @@ class SkylinePriorityQueue {
     return Math.floor(i / 2);
   }
 }
+
+export default SkylinePriorityQueue;

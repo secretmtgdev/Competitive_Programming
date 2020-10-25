@@ -7,7 +7,12 @@ export interface SkylinePoint {
 export interface SkylineQueuePoint {
   x: number;
   y: number;
-  type: string; 
+  type: SkylineType;
+}
+
+export enum SkylineType {
+  START = "start",
+  END = "end",
 }
 
 export interface Point {
