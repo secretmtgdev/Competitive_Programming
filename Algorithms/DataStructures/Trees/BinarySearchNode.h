@@ -5,6 +5,7 @@ class BinarySearchNode
 private:
     int _data;
     int _frequency;
+    int _height;
     BinarySearchNode *_left, *_right;
 
 public:
@@ -18,4 +19,6 @@ public:
     int getFrequency();
     void decrementFrequency();
     void incrementFrequency();
+    int getHeight();
+    void setHeight(int);
 };

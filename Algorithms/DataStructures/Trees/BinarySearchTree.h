@@ -1,4 +1,5 @@
 #include "BinarySearchNode.h"
+#include <vector>
 
 class BinarySearchTree
 {
@@ -8,8 +9,10 @@ private:
     bool containsUtil(BinarySearchNode *, int);
     BinarySearchNode *findMin();
     BinarySearchNode *findMax();
-    BinarySearchNode *insertUtil(BinarySearchNode *, int);
+    BinarySearchNode *insertUtil(BinarySearchNode *, int, int);
     void lazyDeleteUtil(BinarySearchNode *, int);
+    BinarySearchNode *generateMinimalTreeUtil(BinarySearchNode *, std::vector<int>, int, int);
+    int isBalancedUtil(BinarySearchNode *);
 
 public:
     BinarySearchTree();
@@ -19,6 +22,10 @@ public:
     void preorderTraversal(BinarySearchNode *);
     void inorderTraversal(BinarySearchNode *);
     void postorderTraversal(BinarySearchNode *);
+    void levelorderTraversal(BinarySearchNode *);
+    bool isBalanced(BinarySearchNode *);
+    BinarySearchNode *generateMinimalTree(std::vector<int>);
     BinarySearchNode *getRoot();
+    void setRoot(BinarySearchNode *);
     ~BinarySearchTree();
 };
