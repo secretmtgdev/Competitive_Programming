@@ -14,6 +14,8 @@ private:
     BinarySearchNode *generateMinimalTreeUtil(BinarySearchNode *, std::vector<int>, int, int);
     int isBalancedUtil(BinarySearchNode *);
     BinarySearchNode *LCAUtil(BinarySearchNode *, int, int);
+    bool sameTreeUtil(BinarySearchNode *, BinarySearchNode *);
+    bool containsSubtreeUtil(BinarySearchNode *, BinarySearchNode *);
 
 public:
     BinarySearchTree();
@@ -29,5 +31,6 @@ public:
     BinarySearchNode *getRoot();
     void setRoot(BinarySearchNode *);
     BinarySearchNode *LCA(int, int);
+    bool containsSubtree(BinarySearchTree *);
     ~BinarySearchTree();
 };

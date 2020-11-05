@@ -11,6 +11,7 @@ void testInsert();
 void testDelete();
 void testGenerateMinimalTree();
 void testLCA();
+void testSubtreeOf();
 
 // Helper functions
 BinarySearchTree *generateRandomTree(int);
@@ -21,7 +22,8 @@ int main()
     // testInsert();
     // testDelete();
     // testGenerateMinimalTree();
-    testLCA();
+    // testLCA();
+    testSubtreeOf();
 }
 
 void testInsert()
@@ -92,6 +94,72 @@ void testLCA()
     res = bst->LCA(p, q);
     assert(res->getData() == 4);
     printf("The LCA value of %d and %d is %d\n", p, q, res->getData());
+}
+
+void testSubtreeOf()
+{
+    BinarySearchTree *t1 = new BinarySearchTree();
+    t1->insert(10);
+    t1->insert(9);
+    t1->insert(4);
+    t1->insert(5);
+    t1->insert(3);
+    t1->insert(6);
+    /** Visual of t1
+     *           10
+     *          / 
+     *         9
+     *        /
+     *       4
+     *      / \
+     *     3   5
+     *          \
+     *           6
+     */
+    BinarySearchTree *t2 = new BinarySearchTree();
+    /** Visual of t2
+     *         5
+     *        / \
+     *       3   6
+     */
+    t2->insert(5);
+    t2->insert(3);
+    t2->insert(6);
+
+    // Case: T2 is not a subtree of T1
+    assert(!t1->containsSubtree(t2));
+    printf("T2 is not a subtree of T1: %s\n", !t1->containsSubtree(t2) ? "true" : "false");
+
+    delete t1;
+    delete t2;
+
+    // Case: T2 is a subtree of T1
+    t1 = new BinarySearchTree();
+    t1->insert(10);
+    t1->insert(9);
+    t1->insert(5);
+    t1->insert(4);
+    t1->insert(6);
+    /** Visual of t1
+     *           10
+     *          / 
+     *         9
+     *        /
+     *       5
+     *      / \
+     *     4   6
+     */
+    t2 = new BinarySearchTree();
+    /** Visual of t2
+     *         5
+     *        / \
+     *       4   6
+     */
+    t2->insert(5);
+    t2->insert(4);
+    t2->insert(6);
+    assert(t1->containsSubtree(t2));
+    printf("T2 is subtree of T1: %s\n", t1->containsSubtree(t2) ? "true" : "false");
 }
 
 BinarySearchTree *generateRandomTree(int size)

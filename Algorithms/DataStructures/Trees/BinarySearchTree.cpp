@@ -112,6 +112,11 @@ BinarySearchNode *BinarySearchTree::LCA(int p, int q)
     return LCAUtil(_root, p, q);
 }
 
+bool BinarySearchTree::containsSubtree(BinarySearchTree *other)
+{
+    return containsSubtreeUtil(_root, other->getRoot());
+}
+
 BinarySearchTree::~BinarySearchTree()
 {
     cleanUp(_root);
@@ -268,4 +273,28 @@ BinarySearchNode *BinarySearchTree::LCAUtil(BinarySearchNode *root, int p, int q
     BinarySearchNode *left = LCAUtil(root->getLeft(), p, q);
     BinarySearchNode *right = LCAUtil(root->getRight(), p, q);
     return left && right ? root : left ? left : right;
+}
+
+bool BinarySearchTree::sameTreeUtil(BinarySearchNode *r1, BinarySearchNode *r2)
+{
+    if (!r1 && !r2)
+        return true;
+    if (!r1 || !r2)
+        return false;
+    if (r1->getData() != r2->getData())
+        return false;
+    bool left = sameTreeUtil(r1->getLeft(), r2->getLeft());
+    bool right = sameTreeUtil(r1->getRight(), r2->getRight());
+    return left && right;
+}
+
+bool BinarySearchTree::containsSubtreeUtil(BinarySearchNode *r1, BinarySearchNode *r2)
+{
+    if (!r1)
+        return false;
+    if (r1->getData() == r2->getData())
+    {
+        return sameTreeUtil(r1->getLeft(), r2->getLeft()) && sameTreeUtil(r1->getRight(), r2->getRight());
+    }
+    return containsSubtreeUtil(r1->getLeft(), r2) || containsSubtreeUtil(r1->getRight(), r2);
 }
