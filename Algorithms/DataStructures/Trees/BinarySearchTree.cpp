@@ -107,6 +107,11 @@ bool BinarySearchTree::isBalanced(BinarySearchNode *root)
     return isBalancedUtil(root) != INT16_MIN;
 }
 
+BinarySearchNode *BinarySearchTree::LCA(int p, int q)
+{
+    return LCAUtil(_root, p, q);
+}
+
 BinarySearchTree::~BinarySearchTree()
 {
     cleanUp(_root);
@@ -253,4 +258,14 @@ int BinarySearchTree::isBalancedUtil(BinarySearchNode *root)
         return INT16_MIN;
     else
         return std::max(leftHeight, rightHeight) + 1;
+}
+
+BinarySearchNode *BinarySearchTree::LCAUtil(BinarySearchNode *root, int p, int q)
+{
+    if (!root || root->getData() == p || root->getData() == q)
+        return root;
+
+    BinarySearchNode *left = LCAUtil(root->getLeft(), p, q);
+    BinarySearchNode *right = LCAUtil(root->getRight(), p, q);
+    return left && right ? root : left ? left : right;
 }

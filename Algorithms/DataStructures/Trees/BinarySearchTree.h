@@ -13,6 +13,7 @@ private:
     void lazyDeleteUtil(BinarySearchNode *, int);
     BinarySearchNode *generateMinimalTreeUtil(BinarySearchNode *, std::vector<int>, int, int);
     int isBalancedUtil(BinarySearchNode *);
+    BinarySearchNode *LCAUtil(BinarySearchNode *, int, int);
 
 public:
     BinarySearchTree();
@@ -27,5 +28,6 @@ public:
     BinarySearchNode *generateMinimalTree(std::vector<int>);
     BinarySearchNode *getRoot();
     void setRoot(BinarySearchNode *);
+    BinarySearchNode *LCA(int, int);
     ~BinarySearchTree();
 };
