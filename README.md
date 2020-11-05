@@ -2,10 +2,9 @@
 
 Learning inspired by Tushar Roy, CodeNCode, & Errichto. 
 
-Algorithms/Data structures: Solo code challenges from post learning
+**Algorithms/Data structures**: Solo code challenges from post learning
 
-Everything else
-The contents of this repository is strictly for learning purposes following pseudcode --> implementation of algorithms learned from the resources.
+**Everything else**: The contents of this repository is strictly for learning purposes following pseudcode --> implementation of algorithms learned from the resources.
 
 ## Compile code through MAC command line
 
