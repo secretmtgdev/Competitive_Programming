@@ -16,13 +16,14 @@ void testSubtreeOf();
 // Helper functions
 BinarySearchTree *generateRandomTree(int);
 void printCommonVisuals(BinarySearchTree *bst);
+void cleanTree(BinarySearchTree *bst);
 
 int main()
 {
-    // testInsert();
-    // testDelete();
-    // testGenerateMinimalTree();
-    // testLCA();
+    testInsert();
+    testDelete();
+    testGenerateMinimalTree();
+    testLCA();
     testSubtreeOf();
 }
 
@@ -33,6 +34,7 @@ void testInsert()
 
     printCommonVisuals(bst);
 
+    cleanTree(bst);
     printf("\nFINISHED TESTING INSERTION\n");
 }
 
@@ -44,6 +46,7 @@ void testDelete()
     bst->lazyDelete(6);
 
     printCommonVisuals(bst);
+    cleanTree(bst);
 
     printf("\nFINISHED TESTING DELETION\n");
 }
@@ -55,11 +58,13 @@ void testGenerateMinimalTree()
     BinarySearchTree *bst = new BinarySearchTree();
     bst->setRoot(bst->generateMinimalTree(increasingOrder));
     printCommonVisuals(bst);
+    cleanTree(bst);
     printf("\nFINISHED TESTING GENERATE MINIMAL TREE\n");
 }
 
 void testLCA()
 {
+    printf("\nTESTING LCA \n");
     BinarySearchTree *bst = new BinarySearchTree();
     /** Visual that I am working with
      *       7
@@ -94,10 +99,14 @@ void testLCA()
     res = bst->LCA(p, q);
     assert(res->getData() == 4);
     printf("The LCA value of %d and %d is %d\n", p, q, res->getData());
+    cleanTree(bst);
+
+    printf("\nFINISHED TESTING LCA \n");
 }
 
 void testSubtreeOf()
 {
+    printf("\nTESTING SUBTREE OF \n");
     BinarySearchTree *t1 = new BinarySearchTree();
     t1->insert(10);
     t1->insert(9);
@@ -160,6 +169,10 @@ void testSubtreeOf()
     t2->insert(6);
     assert(t1->containsSubtree(t2));
     printf("T2 is subtree of T1: %s\n", t1->containsSubtree(t2) ? "true" : "false");
+
+    cleanTree(t1);
+    cleanTree(t2);
+    printf("\nFINISHED TESTING SUBTREE OF \n");
 }
 
 BinarySearchTree *generateRandomTree(int size)
@@ -185,4 +198,10 @@ void printCommonVisuals(BinarySearchTree *bst)
     bst->levelorderTraversal(bst->getRoot());
     printf("\nBalanced?: %s", bst->isBalanced(bst->getRoot()) ? "true" : "false");
     printf("\n");
+}
+
+void cleanTree(BinarySearchTree *bst)
+{
+    delete bst;
+    bst = NULL;
 }
